@@ -28,7 +28,7 @@ public class PersonajeController {
 	@Autowired
 	private PersonajeMapper perMap;
 	
-	@GetMapping
+	@GetMapping("/getAll")
 	public ResponseEntity<List<PersonajeDtoBasic>> getPersonajes(){
 		return ResponseEntity.ok().body(personajeService.getAll());
 	}
@@ -62,13 +62,8 @@ public class PersonajeController {
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<?> getById(@PathVariable Long id){
-		return ResponseEntity.status(HttpStatus.OK).body(perMap.personajeEntity2Dto(personajeService.getById(id)));
-	}
-	
-	@GetMapping("/filter")
+
+	@GetMapping
     public ResponseEntity<?> getDetailsByFilters(
             @RequestParam(required = false) String nombre,
             @RequestParam(required = false) Long edad,

@@ -28,7 +28,7 @@ public class PeliculaController {
 	@Autowired
 	private PeliculaMapper peliMap;
 	
-	@GetMapping
+	@GetMapping("/getAll")
 	public ResponseEntity<List<PeliculaDtoBasic>> getAll(){
 		return ResponseEntity.ok().body(peliService.getAll());
 	}
@@ -75,7 +75,7 @@ public class PeliculaController {
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 	
-	@GetMapping("/filter")
+	@GetMapping
     public ResponseEntity<?> getDetailsByFilters(
             @RequestParam(required = false) String nombre,
             @RequestParam(required = false) Set<Long> generos,
