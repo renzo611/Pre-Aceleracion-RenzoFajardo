@@ -1,6 +1,7 @@
 package com.alkemy.project.demo.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,10 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.alkemy.project.demo.dto.PersonajeDtoBasic;
 import com.alkemy.project.demo.entity.PersonajeEntity;
+import com.alkemy.project.demo.mapper.PersonajeMapper;
 import com.alkemy.project.demo.service.PersonajeService;
 
 @RestController
@@ -23,7 +25,8 @@ import com.alkemy.project.demo.service.PersonajeService;
 public class PersonajeController {
 	@Autowired 
 	private PersonajeService personajeService;
-	
+	@Autowired
+	private PersonajeMapper perMap;
 	
 	@GetMapping
 	public ResponseEntity<List<PersonajeDtoBasic>> getPersonajes(){
@@ -59,4 +62,19 @@ public class PersonajeController {
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getById(@PathVariable Long id){
+		return ResponseEntity.status(HttpStatus.OK).body(perMap.personajeEntity2Dto(personajeService.getById(id)));
+	}
+	
+	@GetMapping("/filter")
+    public ResponseEntity<?> getDetailsByFilters(
+            @RequestParam(required = false) String nombre,
+            @RequestParam(required = false) Long edad,
+            @RequestParam(required = false) Set<Long> peliculas 
+    ) {
+        List<PersonajeDtoBasic> icons = this.personajeService.getByFilters(nombre, edad, peliculas);
+        return ResponseEntity.ok(icons);
+    }
 }

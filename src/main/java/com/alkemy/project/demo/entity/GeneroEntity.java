@@ -72,5 +72,8 @@ public class GeneroEntity {
 		this.peliculasAsociadas = peliculasAsociadas;
 	}
 	
+	public void addPelicula(PeliculaEntity pelicula) {
+		this.peliculasAsociadas.add(pelicula);
+	}
 	
 }

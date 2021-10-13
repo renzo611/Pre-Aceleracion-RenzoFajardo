@@ -1,7 +1,7 @@
 package com.alkemy.project.demo.service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 import com.alkemy.project.demo.dto.PersonajeDto;
 import com.alkemy.project.demo.dto.PersonajeDtoBasic;
@@ -12,4 +12,5 @@ public interface PersonajeService{
 	public PersonajeDto save(PersonajeEntity entity);
 	public PersonajeEntity getById(Long id);
 	public void delete(Long id);
+	public List<PersonajeDtoBasic> getByFilters(String nombre, Long edad, Set<Long> peliculas);
 }

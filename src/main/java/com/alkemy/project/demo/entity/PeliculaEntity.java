@@ -1,5 +1,4 @@
 package com.alkemy.project.demo.entity;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Range;
@@ -54,6 +54,10 @@ public class PeliculaEntity {
 	@ManyToMany(mappedBy = "peliculasAsociadas")
 	private List<GeneroEntity> generosAsociados = new ArrayList<>(); 
 	
+	@PrePersist
+	private void init() {
+		this.fechaCreacion = new Date();
+	}
 	
 	public Long getId() {
 		return id;
@@ -111,5 +115,8 @@ public class PeliculaEntity {
 		this.imagen = imagen;
 	}
 	
+	public void addPersonaje(PersonajeEntity personaje) {
+		this.personajesAsociados.add(personaje);
+	}
 	
 }
